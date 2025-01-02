@@ -45,7 +45,7 @@ jobs:
           if [[ $PERMISSIONS =~ "workflow" || $PERMISSIONS == "" ]]; then
             echo "GH_PAT holds workflow permissions or is fine-grained PAT."
             echo "has_permission=true" >> $GITHUB_OUTPUT # Set WORKFLOW_PERMISSION to false.
-          else 
+          else
             echo "GH_PAT lacks workflow permissions."
             echo "Automated build features will be skipped!"
             echo "has_permission=false" >> $GITHUB_OUTPUT # Set WORKFLOW_PERMISSION to false.
@@ -154,7 +154,7 @@ jobs:
 
       - name: No new commits
         if: |
-          needs.check_alive_and_permissions.outputs.WORKFLOW_PERMISSION == 'true' && 
+          needs.check_alive_and_permissions.outputs.WORKFLOW_PERMISSION == 'true' &&
           vars.SCHEDULED_SYNC != 'false' && steps.sync.outputs.has_new_commits == 'false'
         run: echo "There were no new commits."
 
@@ -231,7 +231,7 @@ jobs:
 
       - name: No new commits
         if: |
-          needs.check_alive_and_permissions.outputs.WORKFLOW_PERMISSION == 'true' && 
+          needs.check_alive_and_permissions.outputs.WORKFLOW_PERMISSION == 'true' &&
           vars.SCHEDULED_SYNC != 'false' && steps.sync.outputs.has_new_commits == 'false' && needs.check_latest_from_upstream.outputs.ABORT_SYNC == 'false'
         run: echo "There were no new commits."
 
@@ -266,19 +266,19 @@ jobs:
           #curl https://github.com/loopnlearn/Loop/commit/d206432b024279ef710df462b20bd464cd9682d4.patch | git apply --directory=Loop -v --whitespace=fix
 
           # Submodule LoopKit patches:
-          # General template for customizing submodule LoopKit 
+          # General template for customizing submodule LoopKit
           # Copy url from a GitHub commit or pull request and insert below, and remove the "#" sign from the beginning of the line to activate:
           #curl url_to_github_commit.patch | git apply --directory=LoopKit -v --whitespace=fix
 
           # Submodule xxxxx patches:
 
-          # Add patches for customization of additional submodules by following the templates above, 
+          # Add patches for customization of additional submodules by following the templates above,
           # and make sure to specify the submodule by setting "--directory=(submodule_name)".
           # Several patches may be added per submodule.
           # Adding comments (#) may be useful to easily tell the individual patches apart.
-          The lines below add the customizations listed using the CustomizationSelect script
-          # The "" is a continuation character 
-          #   the line following a "" should not be blank
+          # The lines below add the customizations listed using the CustomizationSelect script
+          # The "\" is a continuation character
+          #   the line following a "\" should not be blank
           /bin/bash -c "$(curl -fsSL \
           https://raw.githubusercontent.com/loopandlearn/lnl-scripts/main/CustomizationSelect.sh)" \
           dexcom_upload_readings \
@@ -290,12 +290,10 @@ jobs:
           profiles \
           basal_lock \
           live_activity
-      
+         
 
           # the final customization listed above CANNOT have a continuation character
           # more customizations can be pasted after this line
-          
-
       # Patch Fastlane Match to not print tables
       - name: Patch Match Tables
         run: |
